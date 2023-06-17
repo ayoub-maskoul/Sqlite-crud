@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sqlite_crud/User.dart';
 import 'package:sqlite_crud/add_users.dart';
+import 'package:sqlite_crud/edit_user.dart';
+import 'package:sqlite_crud/user_details.dart';
 import 'package:sqlite_crud/user_servise.dart';
 
 void main() {
@@ -68,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return Card(
             child: ListTile(
               onTap: () {
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => UserDetails(user: _userlist[index],),));
               },
               leading:const Icon(Icons.person),
               title: Row(
@@ -77,14 +79,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text(_userlist[index].name ?? " "),
                 ],
               ),
-              subtitle: Row(
+              subtitle: Column(
                 children: [
-                  Column(
+                  Row(
                       children: [
                         const Text("Age: "),
-                        Text(_userlist[index].age.toString() ?? "0"),
+                        Text(_userlist[index].age.toString()),
               ]),
-                  Column(
+                  Row(
                       children: [
                         const Text("Address: "),
                         Text(_userlist[index].address ?? " "),
@@ -95,18 +97,42 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    onPressed: () async{
-                        var res = await _userService.deleteUser(_userlist[index].id);
-                        if(res!=null){
-                          getAllUser();
-                        }
-                      
+                    onPressed: () {
+                        showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Delete'),
+                                content: const Text('Are you sure?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async{
+                                      Navigator.pop(context);
+                                      
+                                      var res = await _userService.deleteUser(_userlist[index].id);
+                                      if(res!=null){
+                                        getAllUser();
+                                      }
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
                     }, 
                     icon:const Icon(Icons.delete)
                     ),
                   IconButton(
                     onPressed: () {
-                      
+                      Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => EditUser(user: _userlist[index],),))
+                      .then((res){
+                        if(res!=null){
+                          getAllUser();
+                        }});
                     }, 
                     icon:const Icon(Icons.edit)
                     ),
@@ -120,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           Navigator.push(
             context, 
-            MaterialPageRoute(builder: (context) => AddUsers(),)
+            MaterialPageRoute(builder: (context) => const AddUsers(),)
           ).then((res){
             if(res!=null){
               getAllUser();

@@ -1,5 +1,3 @@
-
-
 import 'package:sqflite/sqflite.dart';
 import 'package:sqlite_crud/db_connection.dart';
 

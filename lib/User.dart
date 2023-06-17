@@ -9,7 +9,7 @@ class User{
 
   userMap(){
     var map = <String,dynamic>{};
-    map['id']=id??null;
+    map['id']=id;
     map['name']=name!;
     map['age']=age!;
     map['address']=address!;
