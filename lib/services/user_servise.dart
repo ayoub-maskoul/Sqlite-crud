@@ -1,8 +1,8 @@
 
 
 
-import 'package:sqlite_crud/User.dart';
-import 'package:sqlite_crud/servise.dart';
+import 'package:sqlite_crud/model/User.dart';
+import 'package:sqlite_crud/services/servise.dart';
 
 class UserServise{
     late Service _service;

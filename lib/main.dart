@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sqlite_crud/User.dart';
-import 'package:sqlite_crud/add_users.dart';
-import 'package:sqlite_crud/edit_user.dart';
-import 'package:sqlite_crud/user_details.dart';
-import 'package:sqlite_crud/user_servise.dart';
+import 'package:sqlite_crud/model/User.dart';
+import 'package:sqlite_crud/pages/add_users.dart';
+import 'package:sqlite_crud/pages/edit_user.dart';
+import 'package:sqlite_crud/pages/user_details.dart';
+import 'package:sqlite_crud/services/user_servise.dart';
 
 void main() {
   runApp(const MyApp());
@@ -112,10 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                     onPressed: () async{
                                       Navigator.pop(context);
                                       
-                                      var res = await _userService.deleteUser(_userlist[index].id);
-                                      if(res!=null){
+                                      await _userService.deleteUser(_userlist[index].id);
                                         getAllUser();
-                                      }
+                                        setState(() {
+                                          
+                                        });
                                     },
                                     child: const Text('OK'),
                                   ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sqlite_crud/User.dart';
-import 'package:sqlite_crud/user_servise.dart';
+import 'package:sqlite_crud/model/User.dart';
+import 'package:sqlite_crud/services/user_servise.dart';
 
 class EditUser extends StatefulWidget {
   const EditUser({super.key,required this.user});
